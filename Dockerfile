@@ -7,9 +7,9 @@ RUN \
 	bash -c "echo 'deb http://weechat.org/ubuntu xenial main' > /etc/apt/sources.list.d/weechat.list"
 
 RUN \
-	apt-get update && \
-	apt-get install --no-install-recommends -y weechat-curses weechat-plugins tmux ncurses-term && \
-	apt-get clean && \
+	apt update && \
+	apt install --no-install-recommends -y weechat-curses weechat-plugins && \
+	apt clean && \
 	rm -rf /var/lib/apt/lists/*
 RUN \
 	sed -i -e "s/# en_AU.UTF-8/en_AU.UTF-8/" /etc/locale.gen && \
@@ -20,10 +20,10 @@ RUN \
 
 USER weechat
 WORKDIR /home/weechat
-RUN \
-	mkdir /home/weechat/.weechat && \
-	echo 'set -g default-terminal "tmux-256color"' > ~/.tmux.conf && \
-	echo 'set -g status off' >> ~/.tmux.conf
-ENV LANG=en_AU.UTF-8
+RUN mkdir /home/weechat/.weechat
+ENV \
+	LC_ALL=en_AU.UTF-8 \
+	LANG=en_AU.UTF-8 \
+	TERM=xterm-256color
 VOLUME ["/home/weechat/.weechat"]
-CMD ["tmux", "-2u", "new-session", "weechat-curses"]
+CMD ["weechat-curses"]
