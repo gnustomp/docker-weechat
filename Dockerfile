@@ -12,7 +12,7 @@ RUN \
 
 RUN \
 	apt-get update && \
-	apt-get install --no-install-recommends -y weechat-curses weechat-plugins && \
+	apt-get install --no-install-recommends -y locales weechat-curses weechat-plugins && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
 RUN \
